@@ -1,5 +1,6 @@
 
 <template>
+    <vue-toolbar></vue-toolbar>
 
 <v-container>
     <include src="../components/VueToolbar.vue"/>

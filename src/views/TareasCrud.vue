@@ -1,4 +1,5 @@
 <template>
+    <VueToolbar></VueToolbar>
     <v-container >
         <v-row >
 
@@ -84,8 +85,10 @@
 </template>
 
 <script>
+    import VueToolbar from "../components/VueToolbar";
     export default {
         name: "TareasCrud" ,
+        components: {VueToolbar},
         data(){
             return {
                 listaTareas: [

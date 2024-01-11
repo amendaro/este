@@ -1,9 +1,9 @@
 <template>
-        <VueToolbar></VueToolbar>
+        <VueToolbar> </VueToolbar>
 
 
 
-    <v-container>
+    <v-container >
 
 
         <v-row xs="12" sm="6" >
@@ -82,9 +82,18 @@
                                 variant="text"
                                 @click="agregarAlCarrito(producto)"
                         >
-                            Reserve
+                            Agregar al carrito
                         </v-btn>
                     </v-card-actions>
+                    <!--v-card-actions>
+                        <v-btn
+                                color="deep-purple-lighten-2"
+                                variant="text"
+                                @click="agregarAlCarrito(producto)"
+                        >
+                            Agregar a lista
+                        </v-btn>
+                    </v-card-actions!-->
                 </v-card>
 
 
@@ -122,48 +131,15 @@
 
 
 
-    <div  v-if="carrito.length >0" class="container py-4">
 
-        <v-btn class="text-none" stacked>
-            <v-badge :content="cartItems" color="error">
+<div>
 
-                <v-icon>mdi-store-outline</v-icon>
-            </v-badge>
-        </v-btn>
-        </div>
+        <h1 v-if="carrito.length" class="my-4"> Lista de Productos </h1>
+        <h1 v-else class="my-4"> No hay productos Agregados</h1>
+    <lista-productos :productos="carrito" @eliminarProducto="eliminarDelCarrito"></lista-productos>
 
+</div>
 
-        <h1 v-if="carrito.length >0" class="my-4">Carrito de Compras</h1>
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="cart-item" v-for="producto in carrito" :key="producto.id">
-
-                    <v-row>
-
-                        <v-col class="cart-item">
-                            <v-card-title>
-
-                                <h2>{{ producto.nombre }}</h2>
-
-                            </v-card-title>
-                            <v-card-text>
-
-                                <p> {{ producto.descripcion }} </p>
-
-                            </v-card-text>
-                            <v-card-text>
-                                <p> Precio: {{ producto.precio }} </p>
-                            </v-card-text>
-                            <v-btn class="mt-5 ml-5" color="error" @click="eliminardelcarrito(producto)">Eliminar</v-btn>
-
-
-                        </v-col>
-
-                    </v-row>
-                </div>
-
-            </div>
-        </div>
 
     </v-container>
 
@@ -180,45 +156,26 @@
 </template>
 
 <script>
-
+    import { mapState, mapActions, mapGetters } from 'vuex';
     import VueToolbar from "../components/VueToolbar";
+    import ListaProductos from '../components/ListaProductos.vue';
+
+
+
+
 
     export default {
-        components: {VueToolbar},
-        data() {
-            return {
-                productos: [
-                    {id: 1, nombre: 'Producto 1', descripcion: 'Descripción del producto 1', precio: 10},
-                    {id: 2, nombre: 'Producto 2', descripcion: 'Descripción del producto 2', precio: 20},
-                    {id: 3, nombre: 'Producto 3', descripcion: 'Descripción del producto 3', precio: 30},
-                    {id: 4, nombre: 'Producto 4', descripcion: 'Descripción del producto 4', precio: 40},
-                ],
-                carrito: [],
-                cartItems: 0,
-                loading: false,
-                selection: 1,
-            };
+        components: {VueToolbar, ListaProductos},
+        computed: {
+            ...mapState(['productos', 'carrito']),
         },
         methods: {
-            agregarAlCarrito(producto) {
-                this.carrito.push(producto);
-                this.cartItems++;
-            },
-            eliminardelcarrito(producto) {
-                const index = this.carrito.findIndex(item => item.id === producto.id);
-                if (index !== -1) {
-                    this.carrito.splice(index, 1);
-
-                }
-            },
-            reserve() {
-                this.loading = true
-
-                setTimeout(() => (this.loading = false), 2000)
-            },
-
-        }
+            ...mapActions(['agregarAlCarrito', 'eliminarDelCarrito'])
+        },
     }
+
+
+
 
 </script>
 
@@ -382,5 +339,8 @@
         border-radius: 50%;
         padding: 5px;
         margin-left: 5px;
+    }
+    .hide{
+        display: none;
     }
 </style>

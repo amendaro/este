@@ -7,9 +7,9 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-      component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/tiempovuetify',
+    name: 'tiempovuetify',
+      component: () => import(/* webpackChunkName: "about" */ '../views/Tiempovuetify.vue')
   },
     {
         path: '/tareas-crud',
@@ -22,9 +22,9 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/ca.vue')
     },
     {
-        path: '/api',
-        name: 'api',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Api.vue')
+        path: '/tiempo',
+        name: 'tiempo',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Tiempo.vue')
     },
     {
     path: '/prueba',

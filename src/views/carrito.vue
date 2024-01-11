@@ -1,66 +1,33 @@
 <template>
+    <div>
+        <v-card v-for="producto in productos" :key="producto.id">
+            <v-card-title>{{ producto.nombre }}</v-card-title>
+            <v-card-text>{{ producto.descripcion }}</v-card-text>
+            <v-btn @click="eliminarDelCarrito(producto.id)">Eliminar</v-btn>
+        </v-card>
 
+        <v-badge :content="cantidadProductosEnCarrito">
+            <v-btn @click="agregarAlCarrito">Agregar al carrito</v-btn>
+        </v-badge>
+
+        <lista-productos :productos="carrito" @eliminarProducto="eliminarDelCarrito"></lista-productos>
+    </div>
 </template>
 
 <script>
+    import { mapState, mapActions, mapGetters } from 'vuex';
+    import ListaProductos from '../components/ListaProductos.vue';
+
     export default {
-
-
-
-        data() {
-            return {
-                productos: [
-                    {id: 1, nombre: 'Producto 1', descripcion: 'Descripción del producto 1', precio: 10},
-                    {id: 2, nombre: 'Producto 2', descripcion: 'Descripción del producto 2', precio: 20},
-                    {id: 3, nombre: 'Producto 3', descripcion: 'Descripción del producto 3', precio: 30},
-                    {id: 4, nombre: 'Producto 4', descripcion: 'Descripción del producto 4', precio: 40},
-                ],
-                carrito: [],
-                cartItems: 0,
-            };
+        components: {
+            ListaProductos
+        },
+        computed: {
+            ...mapState(['productos', 'carrito']),
+            ...mapGetters(['cantidadProductosEnCarrito'])
         },
         methods: {
-            AgregarAlCarrito(producto) {
-                this.carrito.push(producto);
-                this.cartItems++;
-            },
-            eliminardelcarrito(producto) {
-                const index = this.carrito.findIndex(item => item.id === producto.id);
-                if (index !== -1){
-                    this.carrito.splice(index,1);
-
-                }
-            },
+            ...mapActions(['agregarAlCarrito', 'eliminarDelCarrito'])
         }
-    }
+    };
 </script>
-
-<style>
-    .products {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .product-item {
-        margin: 10px;
-    }
-
-    .cart {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #f8f9fa;
-        padding: 10px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-    }
-
-    .cart-count {
-        background-color: red;
-        color: white;
-        border-radius: 50%;
-        padding: 5px;
-        margin-left: 5px;
-    }
-</style>

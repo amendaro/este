@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 loadFonts()
 
+
 createApp(App)
   .use(router)
   .use(store)
